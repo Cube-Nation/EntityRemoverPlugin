@@ -1,0 +1,8 @@
+author: d1rty
+description: EntityRemover
+main: org.lichtspiele.EntityRemoverPlugin.EntityRemoverPlugin
+name: EntityRemover
+version: '1.0'
+depend:
+  - WorldEdit
+  - WorldGuard
