@@ -28,10 +28,10 @@ public class EntityRemover {
 		List<EntityType> entities	= new ArrayList<EntityType>();
 		
 		// apply default entities if entities is null
-		if (entity_names == null || entity_names.isEmpty())
+		if (entity_names == null || entity_names.isEmpty() || entity_names.size() == 0)
 			entity_names = default_entities;
 		 
-		if (entity_names == null || entity_names.isEmpty())
+		if (entity_names == null || entity_names.isEmpty() || entity_names.size() == 0)
 			throw new IllegalArgumentException("Entity list is empty");
 		
 		for (String name : entity_names) {
