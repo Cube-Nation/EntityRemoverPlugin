@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.lichtspiele.EntityRemoverPlugin.exception.NoSuchPluginException;
 import org.mcstats.Metrics;
 
+import com.nisovin.shopkeepers.ShopkeepersPlugin;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
@@ -77,6 +78,18 @@ public class EntityRemoverPlugin extends JavaPlugin {
 		return (WorldGuardPlugin) getPlugin("WorldGuard");
 	}
 	
+	public ShopkeepersPlugin getShopkeepersPlugin() throws NoSuchPluginException {
+		return (ShopkeepersPlugin) getPlugin("Shopkeepers");
+	}
+	
+	public boolean hasShopkeeperPlugin() {
+		try {
+			this.getShopkeepersPlugin();
+		} catch (NoSuchPluginException e) {
+			return false;
+		}
+		return true;
+	}
 	
 	/*
 	 * logging stuff

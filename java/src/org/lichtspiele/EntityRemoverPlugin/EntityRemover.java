@@ -7,7 +7,10 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.lichtspiele.EntityRemoverPlugin.exception.NoSuchPluginException;
 
+import com.nisovin.shopkeepers.Shopkeeper;
+import com.nisovin.shopkeepers.ShopkeepersPlugin;
 import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
@@ -58,6 +61,7 @@ public class EntityRemover {
 		
 		return chunks;
 	}
+	
 
 	/*
 	 * removes entities
@@ -82,6 +86,51 @@ public class EntityRemover {
 				}
 			} // for		
 		} // for
+		
+		// check for shopkeeper plugin
+		if (plugin.hasShopkeeperPlugin()) 
+			this.removeShopkeepers(world, region, chunks);
+		
 	} // end
+	
+	
+	/*
+	 * remove Shopkeepers
+	 */
+	private void removeShopkeepers(World world, ProtectedRegion region, List<Chunk> chunks) {
+		ShopkeepersPlugin sk_plugin = null;;
+		try {
+			sk_plugin = plugin.getShopkeepersPlugin();
+		} catch (NoSuchPluginException e) {
+			return;
+		}
+		
+		if (sk_plugin == null)
+			return;
+		
+		ArrayList<Shopkeeper> shopkeepers	= new ArrayList<Shopkeeper>();
+				
+		// retrieve all shopkeepers in chunks
+		for (Chunk chunk : chunks) {
+			List<Shopkeeper> csk = sk_plugin.getShopkeepersInChunk(
+				world.getName(),
+				chunk.getX(),
+				chunk.getZ()
+			);		
+			
+			if (csk == null)
+				continue;
+			
+			shopkeepers.addAll(csk);
+		}
+
+		for (Shopkeeper shopkeeper : shopkeepers) {
+			if (region.contains(shopkeeper.getX(), shopkeeper.getY(), shopkeeper.getZ())) {
+				sk_plugin.deleteShopkeeper(shopkeeper);
+			}
+		}
+
+		sk_plugin.save();
+	}	
 	
 }
