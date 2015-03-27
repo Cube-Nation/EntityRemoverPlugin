@@ -12,7 +12,7 @@ public class EntityRemoverAPI {
 
 	public static void removeEntity(World world, ProtectedRegion region, String entity_name) {
 		List<String> entity_names = new ArrayList<String>();
-		entity_names.add("entity_name");
+		entity_names.add(entity_name.toUpperCase());
 		removeEntities(world, region, entity_names);
 	}	
 
