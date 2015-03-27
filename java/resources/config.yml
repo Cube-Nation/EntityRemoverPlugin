@@ -1,3 +1,4 @@
+use_metrics: true
 entities:
   - ITEM_FRAME
   - ARMOR_STAND
